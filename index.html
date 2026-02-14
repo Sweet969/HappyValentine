@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine Nasya 💗</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: black;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+  color: white;
+  transition: background 2s ease;
+}
+
+img {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+
+/* Fade */
+.fade {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Glow effect */
+.glow {
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #fff; }
+  to { text-shadow: 0 0 25px #ff4d88; }
+}
+
+/* Buttons */
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+}
+
+#startBtn {
+  background: #ff4d88;
+  color: white;
+}
+
+#yes {
+  background-color: #ff4d88;
+  color: white;
+}
+
+#no {
+  background-color: white;
+  color: #ff4d88;
+  position: absolute;
+}
+
+/* Romantic background */
+.romantic-bg {
+  background: linear-gradient(to bottom, #ff9ecf, #ffcce6);
+}
+
+/* Hearts */
+.heart {
+  position: absolute;
+  animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div id="content" class="fade" style="margin-top:200px;">
+  <h1>Happy Valentine, Nasya 💗</h1>
+  <p style="opacity:0.7;">for someone special</p>
+  <button id="startBtn" onclick="startExperience()">
+    Klik untuk mulai 💕
+  </button>
+</div>
+
+<script>
+function fadeInMusic(audio) {
+  audio.volume = 0;
+  audio.play();
+  let vol = 0;
+  const fade = setInterval(() => {
+    if (vol < 1) {
+      vol += 0.05;
+      audio.volume = vol;
+    } else {
+      clearInterval(fade);
+    }
+  }, 200);
+}
+
+function startExperience() {
+  const music = document.getElementById("bgm");
+  fadeInMusic(music);
+
+  document.body.classList.add("romantic-bg");
+
+  const content = document.getElementById("content");
+  content.innerHTML = `
+    <h1 style="margin-top:100px;">Mau jadi Valentine aku nggak? 😳</h1>
+    <button id="yes" onclick="accepted()">Mau 💗</button>
+    <button id="no" onmouseover="moveButton()">Gamau 🙄</button>
+  `;
+
+  setInterval(createHeart, 300);
+}
+
+function moveButton() {
+  var button = document.getElementById("no");
+  var x = Math.random() * (window.innerWidth - 100);
+  var y = Math.random() * (window.innerHeight - 50);
+  button.style.left = x + "px";
+  button.style.top = y + "px";
+}
+
+function accepted() {
+  const content = document.getElementById("content");
+  content.innerHTML = `
+    <h1 class="glow" style="margin-top:120px;">
+      YEAYYY 😆💗<br><br>
+      Valentine temenan aja kok 😌<br><br>
+      Makasih ya Nasya,<br>
+      udah jadi temen aku 💕
+    </h1>
+    <img src="foto.jpeg" 
+         style="width:200px;
+                border-radius:20px;
+                margin-top:20px;
+                box-shadow:0 0 20px #ff4d88;">
+
+    <p style="margin-top:20px; opacity:0.8;">
+      maybe next year... who knows? 😉
+    </p>
+  `;
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💗";
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => { heart.remove(); }, 5000);
+}
+</script>
+
+</body>
+</html>
